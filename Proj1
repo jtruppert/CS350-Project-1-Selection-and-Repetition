@@ -1,0 +1,42 @@
+//Janet Ruppert, CS350, Project#1
+//Contains main function for launching DrawShapes.
+
+import java.io.*;	
+import java.util.*;
+
+import javax.swing.JFrame;
+
+public class Proj1
+{
+   public static void main( String[] args )
+   {
+
+	  int choice=0, radius=0, instances=0;
+	  Scanner filler;
+	  
+	  try 
+	  {
+		  filler = new Scanner(new File("control.txt"));
+		  choice=filler.nextInt();	//shape
+		  radius=filler.nextInt();	//radius
+		  instances=filler.nextInt();	//number of times
+		  filler.close();
+	  }
+	  catch (IOException e) 
+	  {
+		   System.err.println(e);
+		   System.exit(1);
+	  }
+	  
+      DrawShapes panel = new DrawShapes(choice, radius, instances);
+      
+      JFrame application = new JFrame("DrawShapes"); 
+
+
+      application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+      application.add( panel ); 
+      application.setSize(1000,1000); 
+      application.setVisible( true ); 
+
+   } 
+}
