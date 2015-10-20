@@ -1,0 +1,112 @@
+//Janet Ruppert, CS350, Project #1
+//Draws the shapes using Jpanel and Graphics2D
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import javax.swing.JPanel;
+
+public class DrawShapes extends JPanel
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public double x1, x2, x3, x4, y1, y2, y3, y4, angle= 0, changeAngle;
+	public int instances, center, num, radius; 
+	
+	double j = 0.125;
+	double k = 0.5;
+
+	public DrawShapes(int choice, int b, int am) //inputs
+	{    
+		num = choice;    
+		radius = b;
+		instances = am;    
+		changeAngle = (int)(360/instances);    
+		center = (radius+500)/2;
+	}
+
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+
+    if(num==3) //choice is triangle
+    {
+        g2d.setColor(Color.red);    //set triangle color to red
+        for(int i = 0; i < instances; i++)
+        {
+        	x1 = (int)(center + (radius * Math.sqrt(3)*Math.cos(Math.toRadians(i*changeAngle))));                
+        	y1 = (int)(center + (radius * Math.sqrt(3)*Math.sin(Math.toRadians(i*changeAngle))));            
+        	x2 = (int)(center + (radius * Math.sqrt(3)*Math.cos(Math.toRadians(i*changeAngle+60))));         
+        	y2 = (int)(center + (radius * Math.sqrt(3)*Math.sin(Math.toRadians(i*changeAngle+60))));
+        	
+        	int[] xset = {center, (int)x1, (int)x2};
+            int[] yset = {center, (int)y1, (int)y2};
+            Polygon triangle = new Polygon(xset, yset,3);
+            g2d.drawPolygon(triangle); //draws triangle
+        }
+    }
+
+    if(num==4)  //choice is square
+    {
+        g2d.setColor(Color.orange);  //set to yellow for squares
+
+        for(int i = 0; i < instances; i++)
+        {
+        	x1 = (int)(center+(radius*Math.cos(Math.toRadians(i*changeAngle))));
+        	y1 = (int)(center+(radius*Math.sin(Math.toRadians(i*changeAngle))));
+        	x2= (int)(center+radius*Math.sqrt(8)/2*Math.cos(Math.toRadians(i*changeAngle + 45)));
+        	y2= (int)(center+radius*Math.sqrt(8)/2*Math.sin(Math.toRadians(i*changeAngle + 45)));
+        	x3 = (int)(center+(radius*Math.cos(Math.toRadians(i*changeAngle+ 90))));
+        	y3 = (int)(center+(radius*Math.sin(Math.toRadians(i*changeAngle +90))));
+        	
+            int[] xset = {center, (int)x1, (int)x2, (int)x3};
+            int[] yset = {center, (int)y1, (int)y2, (int)y3};
+            Polygon square = new Polygon(xset, yset,4);
+            g2d.drawPolygon(square);	//draws squares
+        }
+    }
+     
+    if(num==5)  //choice is pentagon
+    {
+        g2d.setColor(Color.magenta);   //set color to magenta for pentagon
+        for(int i=0;i<instances;i++)
+        {          
+        	x1= (int)(center+(radius*Math.cos((Math.PI)/5)));
+        	y2= (int)(center+(radius*Math.sin(Math.toRadians(i*changeAngle)+72)));                
+        	x3= (int)(center+(radius*2*Math.cos(Math.toRadians((i*changeAngle)+72))));                
+        	y3= (int)(center+(radius*2)*Math.sin(Math.toRadians(i*changeAngle)+72));            
+        	x4= (int)(center+(radius*2)*Math.cos(Math.toRadians(i*changeAngle+54)));           
+        	y4= (int)(center+(radius*2)*Math.sin(Math.toRadians(i*changeAngle-54)));
+                
+                int[] xset = {center, (int)x1, (int)x2, (int)x3, (int)x4};                
+        		int[] yset = {center, (int)y1, (int)y2, (int)y3, (int)x4};                
+        		Polygon pentagon = new Polygon(xset, yset, 5);
+        		g2d.drawPolygon(pentagon); // draws pentagon
+
+        }        	           
+        
+    }        
+    
+	if(num==0)  //choice is circle
+    {    
+		g2d.setColor(Color.BLUE); //set color to blue for circles        
+    	g2d.translate(radius*3, radius*3); //move over
+		for(int i =0; i < instances; i++)        
+    	{   	    	
+    			g2d.rotate(Math.toRadians(360/instances));
+    			g2d.drawOval(-radius/8, -radius*3/2, radius*2, radius*2);	//draws circle
+
+    			if (instances >= 35)
+    			{
+    				g2d.rotate(Math.toRadians(instances/36));
+    			}
+    		}
+    	}
+    }
+	
+}
